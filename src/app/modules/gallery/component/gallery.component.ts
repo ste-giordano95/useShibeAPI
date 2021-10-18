@@ -8,7 +8,7 @@ import { Observable, Subscription } from 'rxjs';
   selector: 'app-gallery',
   template: `
  
-  <img src="{{stringImg.message}}" alt="">
+  <img src="{{stringImg.message}}" alt="" class="rounded mx-auto d-block">
  
   `,
   styles: [
