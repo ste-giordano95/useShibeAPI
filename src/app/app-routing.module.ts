@@ -6,7 +6,7 @@ import { GalleryComponent } from './modules/gallery/component/gallery.component'
 const routes: Routes = [
   { path: 'home', component: FormComponent },
   {
-    path: 'gallery/:type/:num',
+    path: 'gallery/:type',
     loadChildren: () => import('./modules/gallery/gallery.module').then(m => m.GalleryModule), component: GalleryComponent
   },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
