@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { FormModule } from './modules/form/form.module';
 
 
+
 @NgModule({
   declarations: [
     AppComponent
@@ -16,6 +17,7 @@ import { FormModule } from './modules/form/form.module';
     AppRoutingModule,
     HttpClientModule,
     FormModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

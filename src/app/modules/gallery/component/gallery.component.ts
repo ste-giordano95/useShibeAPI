@@ -1,44 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { retry } from 'rxjs/operators';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
+import { Dog } from 'src/app/models/IDog';
+import { DogService } from 'src/app/services/dog.service';
 
 @Component({
   selector: 'app-gallery',
   template: `
- 
-  <img src="{{stringImg.message}}" alt="" class="rounded mx-auto d-block">
- 
+<ng-container *ngIf="err">
+  <p>ERRORE!</p>
+</ng-container>
+  <img src="{{(this.listImg$ | async).message }}" alt="" class="rounded mx-auto d-block"> 
   `,
   styles: [
   ]
 })
 export class GalleryComponent implements OnInit {
 
-  private listImg!: Observable<any>;
-  public subs!: Subscription;
-  public stringImg!: any;
+  public listImg$!: Observable<any>;
 
-  constructor(private activatedRoute: ActivatedRoute, private httpClient: HttpClient) { }
+  public err = false;
+
+  constructor(private activatedRoute: ActivatedRoute, public getDog: DogService) { }
 
   ngOnInit(): void {
     const type = this.activatedRoute.snapshot.paramMap.get('type');
-    this.getImage(type!);
+    type ? this.listImg$ = this.getDog.getImageDog(type) : this.err = true;
 
   }
-
-  private getImage(type: string) {
-    this.listImg = this.httpClient.get<any>(`https://dog.ceo/api/breed/${type}/images/random`)
-      .pipe(
-        retry(3)
-      );
-    this.subs = this.listImg.subscribe((data) => this.stringImg = data);
-    this.stringImg = JSON.parse(this.stringImg);
-  }
-
-  ngOnDestroy(): void {
-    this.subs.unsubscribe();
-  }
-
 }
