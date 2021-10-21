@@ -89,6 +89,10 @@
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "animal-gallery:build",
+                        "proxyConfig": "/src/proxy.config.json"
+                    },
                     "configurations": {
                         "production": {
                             "browserTarget": "animal-gallery:build:production"

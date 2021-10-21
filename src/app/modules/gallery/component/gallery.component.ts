@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Dog } from 'src/app/models/IDog';
 import { DogService } from 'src/app/services/dog.service';
 
 @Component({
@@ -10,7 +9,13 @@ import { DogService } from 'src/app/services/dog.service';
 <ng-container *ngIf="err">
   <p>ERRORE!</p>
 </ng-container>
-  <img src="{{(this.listImg$ | async).message }}" alt="" class="rounded mx-auto d-block"> 
+
+<ng-container *ngFor="let img of listImg$ | async">
+  <img src="{{this.img}}" alt="" class="rounded mx-auto d-block"> 
+</ng-container>
+  
+
+
   `,
   styles: [
   ]
@@ -25,7 +30,8 @@ export class GalleryComponent implements OnInit {
 
   ngOnInit(): void {
     const type = this.activatedRoute.snapshot.paramMap.get('type');
-    type ? this.listImg$ = this.getDog.getImageDog(type) : this.err = true;
+    const count = this.activatedRoute.snapshot.paramMap.get('count');
+    type ? this.listImg$ = this.getDog.getImageDog(type, count!) : this.err = true;
 
   }
 }
